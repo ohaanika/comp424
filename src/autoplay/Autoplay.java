@@ -22,8 +22,22 @@ import java.io.IOException;
 public class Autoplay {
     public static void main(String args[]) {
         int n_games;
+        /*
+         * player-0 MUSCOVITE (start first)
+         * player-1 SWEDE
+         * Game 0: player-0 start
+         * Game 1: player-1 start
+         * 
+         * MINE: "student_player.StudentPlayer"
+         * GREEDY: "tablut.GreedyTablutPlayer"
+         * RANDOM: "tablut.RandomTablutPlayer"
+         * 
+         */
+        String p0 = "student_player.StudentPlayer";
+        String p1 = "tablut.GreedyTablutPlayer";
         try {
-            n_games = Integer.parseInt(args[0]);
+            // n_games = Integer.parseInt(args[0]);
+            n_games = Integer.parseInt("4");
             if (n_games < 1) {
                 throw new Exception();
             }
@@ -40,11 +54,11 @@ public class Autoplay {
             Process server = server_pb.start();
 
             ProcessBuilder client1_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
-                    "boardgame.Client", "student_player.StudentPlayer");
+                    "boardgame.Client", p0);
             client1_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
             ProcessBuilder client2_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
-                    "boardgame.Client", "tablut.RandomTablutPlayer");
+                    "boardgame.Client", p1);
             client2_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
             for (int i = 0; i < n_games; i++) {
